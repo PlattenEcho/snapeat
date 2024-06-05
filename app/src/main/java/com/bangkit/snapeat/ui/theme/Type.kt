@@ -10,12 +10,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkit.snapeat.R
 
-val Poppins = FontFamily(
+val plusjakartasans = FontFamily(
     fonts = listOf(
-        Font(R.font.poppins_regular, FontWeight.Normal),
-        Font(R.font.poppins_bold, FontWeight.Bold),
-        Font(R.font.poppins_semibold, FontWeight.SemiBold),
-    )
+        Font(R.font.plusjakartasans_regular, FontWeight.Normal),
+        Font(R.font.plusjakartasans_bold, FontWeight.Bold),
+        Font(R.font.plusjakartasans_semibold, FontWeight.SemiBold),
+        Font(R.font.plusjakartasans_medium, FontWeight.Medium),
+        )
 )
 
 // Set of Material typography styles to start with
@@ -24,31 +25,31 @@ val Poppins = FontFamily(
 val Typography = Typography(
     displaySmall = TextStyle(
         fontSize = 24.sp,
-        fontFamily = Poppins,
+        fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 36.sp,
     ),
     displayMedium = TextStyle(
         fontSize = 32.sp,
-        fontFamily = Poppins,
+        fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 48.sp,
     ),
     bodySmall = TextStyle(
         fontSize = 14.sp,
-        fontFamily = Poppins,
+        fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 21.sp,
     ),
     bodyMedium = TextStyle(
         fontSize = 16.sp,
-        fontFamily = Poppins,
+        fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 24.sp,
     ),
     labelSmall = TextStyle(
         fontSize = 13.sp,
-        fontFamily = Poppins,
+        fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 19.sp,
     ),

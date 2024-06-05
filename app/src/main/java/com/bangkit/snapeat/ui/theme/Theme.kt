@@ -57,7 +57,7 @@ fun NewsAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = kotlin.text.Typography,
+        typography = Typography,
         content = content
     )
 }
