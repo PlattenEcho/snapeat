@@ -11,20 +11,20 @@ data class Page(
 
 val pages = listOf(
     Page(
-        title = "Lorem Ipsum is simply dummy",
-        description = "Lorem Ipsum is simply dummy Lorem Ipsum is simply dummy",
+        title = "Selamat Datang di          SnapEat🍽️",
+        description = "Mulai eksplorasi makanan kamu dengan SnapEat",
         image = R.drawable.onboarding1
     ),
 
     Page(
-        title = "Lorem Ipsum is simply dummy",
-        description = "Lorem Ipsum is simply dummy Lorem Ipsum is simply dummy",
+        title = "Dapatkan rekomendasi restoran mu!",
+        description = "Mulai eksplorasi makanan kamu dengan SnapEat",
         image = R.drawable.onboarding2
     ),
 
     Page(
-        title = "Lorem Ipsum is simply dummy",
-        description = "Lorem Ipsum is simply dummy Lorem Ipsum is simply dummy",
+        title = "Cari makan? Yuk lihat makanan terpopuler",
+        description = "Mulai eksplorasi makanan kamu dengan SnapEat",
         image = R.drawable.onboarding3
     )
 )

@@ -1,10 +1,13 @@
 package com.bangkit.snapeat.presentation.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -12,23 +15,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
-import com.bangkit.snapeat.presentation.common.NewsButton
-import com.bangkit.snapeat.presentation.common.NewsTextButton
+import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.common.CustomTextButton
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
 import com.bangkit.snapeat.presentation.onboarding.components.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    event: (OnBoardingEvent) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()){
 
         val pagerState = rememberPagerState(initialPage = 0) {
@@ -46,52 +54,44 @@ fun OnBoardingScreen() {
             }
         }
         
-        HorizontalPager(state = pagerState) {index ->
-            OnBoardingPage(page = pages[index])
+        HorizontalPager(
+            state = pagerState,
+        ) {index ->
+            Image(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = 0.7f),
+                painter = painterResource(id = pages[index].image),
+                contentDescription = null,
+                contentScale = ContentScale.Crop)
         }
-        Spacer(modifier = Modifier.weight(1f))
+        OnBoardingPage(
+            page = pages[pagerState.currentPage],
+            selectedPage = pagerState.currentPage
+        )
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(MediumPadding2)
             .navigationBarsPadding(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            PageIndicator(
-                modifier = Modifier.width(52.dp),
-                pageSize = pages.size,
-                selectedPage = pagerState.currentPage
-            )
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val scope = rememberCoroutineScope()
-
-                if (buttonState.value[0].isNotEmpty()) {
-                    NewsTextButton(
-                        text = buttonState.value[0],
-                        onClick = {
-                            scope.launch {
-                                pagerState.animateScrollToPage(page = pagerState.currentPage - 1)
-                            }
+            val scope = rememberCoroutineScope()
+            CustomButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = buttonState.value[1],
+                onClick = {
+                    scope.launch {
+                        if (pagerState.currentPage == 3) {
+                            event(OnBoardingEvent.SaveAppEntry)
+                        } else {
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage + 1
+                            )
                         }
-                    )
+                    }
                 }
-
-                NewsButton(
-                    text = buttonState.value[1],
-                    onClick = {
-                        scope.launch {
-                            if (pagerState.currentPage == 3) {
-                            } else {
-                                    pagerState.animateScrollToPage(
-                                        page = pagerState.currentPage + 1
-                                    )
-                                }
-                            }
-
-                    })
-            }
+            )
         }
     }
-
 }

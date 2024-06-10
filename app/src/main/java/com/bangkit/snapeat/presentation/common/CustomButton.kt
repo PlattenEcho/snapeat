@@ -7,18 +7,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.ui.theme.WhiteGray
 
 @Composable
-fun NewsButton(
+fun CustomButton(
+    modifier: Modifier = Modifier,
     text: String,
     onClick:() -> Unit
 ) {
     Button(
+        modifier = modifier,
         onClick = onClick, colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White
@@ -30,7 +32,7 @@ fun NewsButton(
 }
 
 @Composable
-fun NewsTextButton(
+fun CustomTextButton(
     text: String,
     onClick: () -> Unit
 ){

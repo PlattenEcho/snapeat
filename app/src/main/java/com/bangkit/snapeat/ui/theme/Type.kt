@@ -26,14 +26,14 @@ val Typography = Typography(
     displaySmall = TextStyle(
         fontSize = 24.sp,
         fontFamily = plusjakartasans,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         lineHeight = 36.sp,
     ),
     displayMedium = TextStyle(
-        fontSize = 32.sp,
+        fontSize = 28.sp,
         fontFamily = plusjakartasans,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 48.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = 36.sp,
     ),
     bodySmall = TextStyle(
         fontSize = 14.sp,
@@ -49,6 +49,12 @@ val Typography = Typography(
     ),
     labelSmall = TextStyle(
         fontSize = 13.sp,
+        fontFamily = plusjakartasans,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 19.sp,
+    ),
+    labelMedium = TextStyle(
+        fontSize = 16.sp,
         fontFamily = plusjakartasans,
         fontWeight = FontWeight.Normal,
         lineHeight = 19.sp,
