@@ -8,17 +8,17 @@ import javax.inject.Singleton
 class ReadAppEntry (
     private val localUserManager: LocalUserManager
 ) {
-    suspend operator fun invoke(): Flow<Boolean> {
+     operator fun invoke(): Flow<Boolean> {
         return localUserManager.readAppEntry()
     }
 
-    @Provides
-    @Singleton
-    fun provideAppEntryUseCases(
-        localUserManager: LocalUserManager
-    ) = AppEntryUseCases(
-        readAppEntry = ReadAppEntry(localUserManager),
-        saveAppEntry = SaveAppEntry(localUserManager)
-    )
+//    @Provides
+//    @Singleton
+//    fun provideAppEntryUseCases(
+//        localUserManager: LocalUserManager
+//    ) = AppEntryUseCases(
+//        readAppEntry = ReadAppEntry(localUserManager),
+//        saveAppEntry = SaveAppEntry(localUserManager)
+//    )
 
 }

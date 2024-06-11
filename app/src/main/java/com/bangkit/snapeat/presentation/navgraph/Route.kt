@@ -13,4 +13,5 @@ sealed class Route(
 
     object AppStartNavigation : Route(route = "appStartNavigation")
     object SnapEatNavigation : Route(route = "snapEatNavigation")
+    object SnapEatNavigatorScreen: Route(route = "snapEatNavigatorScreen")
 }

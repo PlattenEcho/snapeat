@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.bangkit.snapeat.domain.usecases.AppEntryUseCases
+import com.bangkit.snapeat.presentation.navgraph.NavGraph
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingViewModel
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
@@ -25,23 +27,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var appEntryUseCases: AppEntryUseCases
+    val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
-        lifecycleScope.launch{
-            appEntryUseCases.readAppEntry().collect{
-                Log.d("Text",it.toString())
+        installSplashScreen().apply{
+            setKeepOnScreenCondition{
+                viewModel.splashCondition
             }
         }
+
         setContent {
             SnapEatTheme {
                 Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
-                    val viewModel: OnBoardingViewModel = hiltViewModel()
-                    OnBoardingScreen(
-                        event = viewModel::onEvent
-                    )
+                    val startDestination = viewModel.startDestination
+                    NavGraph(startDestination = startDestination)
                 }
             }
         }

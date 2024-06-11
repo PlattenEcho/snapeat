@@ -83,7 +83,8 @@ fun OnBoardingScreen(
                 onClick = {
                     scope.launch {
                         if (pagerState.currentPage == 3) {
-                            event(OnBoardingEvent.SaveAppEntry)
+//                            event(OnBoardingEvent.SaveAppEntry)
+
                         } else {
                             pagerState.animateScrollToPage(
                                 page = pagerState.currentPage + 1
