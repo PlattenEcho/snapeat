@@ -1,4 +1,5 @@
-package com.bangkit.snapeat.presentation.login
+package com.bangkit.snapeat.presentation.register
+
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -62,7 +63,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     onBackClick: () -> Unit
 ) {
     Scaffold(
@@ -185,7 +186,7 @@ fun LoginScreen(
                     .padding(horizontal = 16.dp),
                 text = "Login"
             ) {
-                
+
             }
         }
     }
@@ -195,8 +196,8 @@ fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview(){
+fun RegisterScreenPreview(){
     SnapEatTheme {
-        LoginScreen(onBackClick = {})
+        RegisterScreen(onBackClick = {})
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -28,6 +29,7 @@ import com.bangkit.snapeat.presentation.Dimension.MediumPadding1
 import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
 import com.bangkit.snapeat.presentation.onboarding.Page
 import com.bangkit.snapeat.presentation.onboarding.pages
+import com.bangkit.snapeat.ui.theme.Brown
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
 
 @Composable
@@ -36,7 +38,7 @@ fun OnBoardingPage(
     page: Page,
     selectedPage: Int
 ){
-    Column(modifier = modifier){
+    Column(modifier = modifier.background(Brown)){
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier

@@ -3,16 +3,13 @@ package com.bangkit.snapeat.presentation.onboarding
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -24,12 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
 import com.bangkit.snapeat.presentation.common.CustomButton
-import com.bangkit.snapeat.presentation.common.CustomTextButton
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
-import com.bangkit.snapeat.presentation.onboarding.components.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -79,20 +73,19 @@ fun OnBoardingScreen(
             val scope = rememberCoroutineScope()
             CustomButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = buttonState.value[1],
-                onClick = {
-                    scope.launch {
-                        if (pagerState.currentPage == 3) {
+                text = buttonState.value[1]
+            ) {
+                scope.launch {
+                    if (pagerState.currentPage == 3) {
 //                            event(OnBoardingEvent.SaveAppEntry)
 
-                        } else {
-                            pagerState.animateScrollToPage(
-                                page = pagerState.currentPage + 1
-                            )
-                        }
+                    } else {
+                        pagerState.animateScrollToPage(
+                            page = pagerState.currentPage + 1
+                        )
                     }
                 }
-            )
+            }
         }
     }
 }

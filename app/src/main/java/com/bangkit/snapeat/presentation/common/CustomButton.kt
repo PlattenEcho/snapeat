@@ -11,18 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bangkit.snapeat.ui.theme.Orange
 import com.bangkit.snapeat.ui.theme.WhiteGray
 
 @Composable
 fun CustomButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick:() -> Unit
+    buttonColor: Color = Orange,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier,
-        onClick = onClick, colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonColor,
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(size = 6.dp)
