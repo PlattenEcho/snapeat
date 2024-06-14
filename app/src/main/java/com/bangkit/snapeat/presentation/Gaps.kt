@@ -24,6 +24,8 @@ val gapW64 @Composable get() = Spacer(modifier = Modifier.width(64.dp))
 val gapH4 @Composable get() = Spacer(modifier = Modifier.height(4.dp))
 val gapH8 @Composable get() = Spacer(modifier = Modifier.height(8.dp))
 val gapH12 @Composable get() = Spacer(modifier = Modifier.height(12.dp))
+val gapH16 @Composable get() = Spacer(modifier = Modifier.height(16.dp))
+
 val gapH24 @Composable get() = Spacer(modifier = Modifier.height(24.dp))
 val gapH32 @Composable get() = Spacer(modifier = Modifier.height(32.dp))
 val gapH64 @Composable get() = Spacer(modifier = Modifier.height(64.dp))

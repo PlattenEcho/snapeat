@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,8 +32,10 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +52,11 @@ import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.Dimension
 import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.common.CustomEmailField
+import com.bangkit.snapeat.presentation.common.CustomPasswordField
+import com.bangkit.snapeat.presentation.common.CustomTextField
+import com.bangkit.snapeat.presentation.gapH16
+import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
 import com.bangkit.snapeat.presentation.onboarding.components.PageIndicator
 import com.bangkit.snapeat.presentation.onboarding.pages
@@ -99,7 +107,8 @@ fun LoginScreen(
                 .fillMaxSize()
                 .background(Brown),
         ) {
-            val inputValue = remember { mutableStateOf(TextFieldValue()) }
+            val emailValue = remember { mutableStateOf(TextFieldValue()) }
+            val passwordValue = remember { mutableStateOf(TextFieldValue()) }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Masuk menggunakan Email",
@@ -116,82 +125,37 @@ fun LoginScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 color = GrayBrown
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = inputValue.value,
-                onValueChange = { inputValue.value = it },
-                placeholder = { Text(
-                    text = "Masukkan Email",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = GrayOrange
-                ) },
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                ),
-                textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Email,
-                        contentDescription = null,
-                        tint = Orange
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = DarkBrown,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = inputValue.value,
-                onValueChange = { inputValue.value = it },
-                placeholder = { Text(
-                    text = "Masukkan Password",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = GrayOrange
-                ) },
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                ),
-                textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Lock,
-                        contentDescription = null,
-                        tint = Orange
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = DarkBrown,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            gapH16
+            CustomEmailField(
+                emailValue = emailValue)
+            gapH16
+            CustomPasswordField(
+                passwordValue = passwordValue)
+            gapH16
             CustomButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 text = "Login"
             ) {
-                
+
+            }
+            gapH16
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimension.MediumPadding2),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = "Lupa Password?",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Orange
+                )
             }
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

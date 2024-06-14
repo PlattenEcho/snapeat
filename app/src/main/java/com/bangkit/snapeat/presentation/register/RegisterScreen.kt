@@ -19,8 +19,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,8 +35,10 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,13 +48,22 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.Dimension
 import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.common.CustomEmailField
+import com.bangkit.snapeat.presentation.common.CustomPasswordField
+import com.bangkit.snapeat.presentation.common.CustomTextField
+import com.bangkit.snapeat.presentation.gapH
+import com.bangkit.snapeat.presentation.gapH16
+import com.bangkit.snapeat.presentation.gapH32
+import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
 import com.bangkit.snapeat.presentation.onboarding.components.PageIndicator
 import com.bangkit.snapeat.presentation.onboarding.pages
@@ -75,7 +89,7 @@ fun RegisterScreen(
                 ),
                 title = {
                     Text(
-                        text = "Login",
+                        text = "Register",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
@@ -100,91 +114,44 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .background(Brown),
         ) {
-            val inputValue = remember { mutableStateOf(TextFieldValue()) }
+            val usernameValue = remember { mutableStateOf(TextFieldValue()) }
+            val emailValue = remember { mutableStateOf(TextFieldValue()) }
+            val passwordValue = remember { mutableStateOf(TextFieldValue()) }
+            var passwordVisible by remember { mutableStateOf(false) }
+
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Masuk menggunakan Email",
+                text = "Daftar Akun Baru",
                 modifier = Modifier.padding(horizontal = Dimension.MediumPadding2),
                 style = MaterialTheme.typography.displayMedium.copy(
                     fontWeight = FontWeight.Bold
                 ),
                 color = Color.White
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            gapH8
             Text(
-                text = "Masukkan kredensial akun kamu untuk mulai menggunakan aplikasi",
+                text = "Masukkan username, email, dan kata sandi kamu untuk membuat akun baru",
                 modifier = Modifier.padding(horizontal = Dimension.MediumPadding2),
                 style = MaterialTheme.typography.bodyMedium,
                 color = GrayBrown
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = inputValue.value,
-                onValueChange = { inputValue.value = it },
-                placeholder = { Text(
-                    text = "Masukkan Email",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = GrayOrange
-                ) },
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                ),
-                textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Email,
-                        contentDescription = null,
-                        tint = Orange
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = DarkBrown,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = inputValue.value,
-                onValueChange = { inputValue.value = it },
-                placeholder = { Text(
-                    text = "Masukkan Password",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = GrayOrange
-                ) },
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                ),
-                textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Lock,
-                        contentDescription = null,
-                        tint = Orange
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = DarkBrown,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            gapH16
+            CustomTextField(
+                textValue = usernameValue,
+                text = "Masukkan Username")
+            gapH16
+            CustomEmailField(
+                emailValue = emailValue)
+            gapH16
+            CustomPasswordField(
+                passwordValue = passwordValue)
+            gapH16
             CustomButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                text = "Login"
+                text = "Register"
             ) {
 
             }
