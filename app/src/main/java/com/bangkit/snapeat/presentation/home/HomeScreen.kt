@@ -4,19 +4,24 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,9 +37,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -123,7 +134,7 @@ fun  HomeScreen() {
             verticalArrangement = Arrangement.spacedBy(2.dp),
             horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
-            listOf("Bubur Ayam", "Soto Lamongan", "Nasi Uduk", "Jus", "Roti", "Jajanan").forEach { item ->
+            listOf("Bubur Ayam", "Soto Lamongan", "Nasi Uduk", "Jus", "Roti", "Susu").forEach { item ->
                 Button(
                     onClick = { /* TODO */ },
                     colors = ButtonDefaults.buttonColors(containerColor = Brown2)
@@ -169,38 +180,68 @@ fun  HomeScreen() {
 
         gapH16
 
-        LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .layout(){ measurable, constraints ->
+                    val placeable = measurable.measure(constraints.copy(
+                        maxWidth = constraints.maxWidth + 16.dp.roundToPx(), //add the end padding 16.dp
+                    ))
+                    layout(placeable.width, placeable.height) {
+                        placeable.place(8.dp.roundToPx(), 0)
+                    }
+                }
         ) {
-            items(listOf(
-                "Gado Gado Bu Risma",
-                "Spaghetti Qiu Pasta",
-                "Gado Gado Bu Risma",
-                "Spaghetti Qiu Pasta",
-                "Gado Gado Bu Risma",
-                "Spaghetti Qiu Pasta")) { place ->
-                Box(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(16.dp))
-                        .background(Color.DarkGray)
-                        .size(height = 150.dp, width = 120.dp)
-                ) {
-                    // Place Image
-                    Image(
-                        painter = painterResource(id = R.drawable.onboarding2),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
-                    Text(
-                        text = place,
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodySmall,
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(end=16.dp),
+                modifier = Modifier.clipToBounds() // Clip content within padding
+            ) {
+                items(listOf(
+                    "Gado Gado Bu Risma",
+                    "Spaghetti Qiu Pasta",
+                    "Gado Gado Bu Risma",
+                    "Spaghetti Qiu Pasta",
+                    "Gado Gado Bu Risma",
+                    "Spaghetti Qiu Pasta")) { place ->
+                    Box(
                         modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(8.dp)
-                    )
+                            .clip(shape = RoundedCornerShape(16.dp))
+                            .background(Color.DarkGray)
+                            .size(height = 150.dp, width = 120.dp)
+                    ) {
+                        // Place Image
+                        Image(
+                            painter = painterResource(id = R.drawable.onboarding2),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .clip(RoundedCornerShape(16.dp))
+                                .drawWithCache {
+                                    val gradient = Brush.verticalGradient(
+                                        colors = listOf(Color.Black, Color.Transparent),
+                                        startY = 150.dp.toPx(),
+                                        endY = (150.dp.toPx()) / 3
+                                    )
+                                    onDrawWithContent {
+                                        drawContent()
+                                        drawRect(gradient, blendMode = BlendMode.Multiply)
+                                    }
+                                }
+                        )
+                        Text(
+                            text = place,
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                lineHeight = 16.sp,
+                                fontSize = 12.sp
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                        )
+                    }
                 }
             }
         }
