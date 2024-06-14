@@ -8,8 +8,6 @@ sealed class Route(
     object LoginScreen : Route(route = "routeScreen")
     object RegisterScreen : Route (route = "RegisterScreen")
     object HomeScreen: Route(route = "homeScreen")
-    object SearchScreen : Route(route = "searchScreen")
-
 
     object AppStartNavigation : Route(route = "appStartNavigation")
     object SnapEatNavigation : Route(route = "snapEatNavigation")

@@ -123,7 +123,7 @@ fun  HomeScreen() {
 
         gapH16
         Text(
-            text = "Halo, Bhaska! makan apa nih pagi ini?",
+            text = "Halo, Bhaska! Makan apa nih pagi ini?",
             color = Color.White,
             style = MaterialTheme.typography.displayMedium
         )
