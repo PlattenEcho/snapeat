@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
+//    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
     id("kotlin-kapt")
 }
 
@@ -67,6 +67,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.0-1.0.13")
 
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("androidx.compose.ui:ui:1.6.7")
@@ -82,8 +83,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // Dagger Hilt
-    implementation ("com.google.dagger:hilt-android:2.51.1")
-    kapt ("com.google.dagger:hilt-compiler:2.51.1")
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-compiler:2.50")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // Retrofit

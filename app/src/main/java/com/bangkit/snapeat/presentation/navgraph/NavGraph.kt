@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
-import com.bangkit.snapeat.presentation.onboarding.OnBoardingViewModel
 
 @Composable
 fun NavGraph(
@@ -25,9 +24,8 @@ fun NavGraph(
             composable(
                 route = Route.OnBoardingScreen.route
             ){
-                val viewModel: OnBoardingViewModel = hiltViewModel()
                 OnBoardingScreen(
-                    event = viewModel::onEvent
+//                    event = viewModel::onEvent
                 )
             }
         }

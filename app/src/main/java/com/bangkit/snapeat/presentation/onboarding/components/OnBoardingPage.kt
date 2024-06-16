@@ -30,6 +30,8 @@ import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
 import com.bangkit.snapeat.presentation.onboarding.Page
 import com.bangkit.snapeat.presentation.onboarding.pages
 import com.bangkit.snapeat.ui.theme.Brown
+import com.bangkit.snapeat.ui.theme.GrayBrown
+import com.bangkit.snapeat.ui.theme.GrayOrange
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
 
 @Composable
@@ -38,7 +40,10 @@ fun OnBoardingPage(
     page: Page,
     selectedPage: Int
 ){
-    Column(modifier = modifier.background(Brown)){
+    Column(
+        modifier = modifier
+            .background(Brown)
+    ){
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
@@ -54,18 +59,16 @@ fun OnBoardingPage(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = page.title,
-            modifier = Modifier.padding(horizontal = MediumPadding2),
             style = MaterialTheme.typography.displayMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
-            color = colorResource(id = R.color.display_small)
+            color = Color.White
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = page.description,
-            modifier = Modifier.padding(horizontal = MediumPadding2),
             style = MaterialTheme.typography.bodyMedium,
-            color = colorResource(id = R.color.text_medium)
+            color = GrayBrown
         )
     }
 }

@@ -1,8 +1,10 @@
 package com.bangkit.snapeat.presentation.onboarding
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,17 +23,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
 import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.gapW8
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
+import com.bangkit.snapeat.ui.theme.Brown
+import com.bangkit.snapeat.ui.theme.SnapEatTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
-    event: (OnBoardingEvent) -> Unit
+//    event: (OnBoardingEvent) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Brown)
+    ){
 
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
@@ -47,45 +59,69 @@ fun OnBoardingScreen(
                 }
             }
         }
-        
+
         HorizontalPager(
             state = pagerState,
-        ) {index ->
+            modifier = Modifier
+                .weight(2f / 3f) // Occupy 2/3 of the screen height
+                .fillMaxWidth()
+        ) { index ->
             Image(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.background)
                     .fillMaxWidth()
-                    .fillMaxHeight(fraction = 0.7f),
+                    .fillMaxHeight(),
                 painter = painterResource(id = pages[index].image),
                 contentDescription = null,
-                contentScale = ContentScale.Crop)
+                contentScale = ContentScale.Crop
+            )
         }
-        OnBoardingPage(
-            page = pages[pagerState.currentPage],
-            selectedPage = pagerState.currentPage
-        )
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(MediumPadding2)
-            .navigationBarsPadding(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val scope = rememberCoroutineScope()
-            CustomButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = buttonState.value[1]
-            ) {
-                scope.launch {
-                    if (pagerState.currentPage == 3) {
-//                            event(OnBoardingEvent.SaveAppEntry)
 
-                    } else {
-                        pagerState.animateScrollToPage(
-                            page = pagerState.currentPage + 1
-                        )
+        Column(
+            modifier = Modifier
+                .weight(1f / 3f) // Occupy 1/3 of the screen height
+                .fillMaxWidth()
+                .padding(horizontal = MediumPadding2)
+                .padding(bottom = 16.dp)
+                .navigationBarsPadding()
+                .background(Brown),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            OnBoardingPage(
+                page = pages[pagerState.currentPage],
+                selectedPage = pagerState.currentPage,
+            )
+            val scope = rememberCoroutineScope()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CustomButton(
+                    text = buttonState.value[1],
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        scope.launch {
+                            if (pagerState.currentPage == pages.size - 1) {
+                            } else {
+                                pagerState.animateScrollToPage(
+                                    page = pagerState.currentPage + 1
+                                )
+                            }
+                        }
                     }
-                }
+                )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OnBoardingPageReview(){
+    SnapEatTheme {
+        OnBoardingScreen()
     }
 }

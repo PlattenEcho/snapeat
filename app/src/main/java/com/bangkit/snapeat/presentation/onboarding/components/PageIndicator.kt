@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.bangkit.snapeat.presentation.Dimension.IndicatorSize
 import com.bangkit.snapeat.ui.theme.BlueGray
+import com.bangkit.snapeat.ui.theme.GrayOrange
 
 @Composable
 fun PageIndicator(
@@ -20,13 +21,14 @@ fun PageIndicator(
     pageSize: Int,
     selectedPage: Int,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color = BlueGray
+    unselectedColor: Color = GrayOrange
 ){
     Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceBetween){
         repeat(pageSize){page->
             Box(modifier = Modifier.size(IndicatorSize).clip(CircleShape)
                 .background(color = if (page == selectedPage) selectedColor else unselectedColor)
             )
+
         }
     }
 }

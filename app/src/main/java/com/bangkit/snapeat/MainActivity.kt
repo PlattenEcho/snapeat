@@ -20,7 +20,6 @@ import androidx.lifecycle.lifecycleScope
 import com.bangkit.snapeat.domain.usecases.AppEntryUseCases
 import com.bangkit.snapeat.presentation.navgraph.NavGraph
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
-import com.bangkit.snapeat.presentation.onboarding.OnBoardingViewModel
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,19 +29,29 @@ class MainActivity : ComponentActivity() {
     val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply{
-            setKeepOnScreenCondition{
-                viewModel.splashCondition
-            }
-        }
-
+        installSplashScreen()
         setContent {
-            SnapEatTheme {
-                Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
-                    val startDestination = viewModel.startDestination
-                    NavGraph(startDestination = startDestination)
+            SnapEatTheme(
+                dynamicColor = false
+            ) {
+                Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+                    OnBoardingScreen()
                 }
             }
         }
+//        installSplashScreen().apply{
+//            setKeepOnScreenCondition{
+////                viewModel.splashCondition
+//            }
+//        }
+//
+//        setContent {
+//            SnapEatTheme {
+//                Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
+//                    val startDestination = viewModel.startDestination
+//                    NavGraph(startDestination = startDestination)
+//                }
+//            }
+//        }
     }
 }

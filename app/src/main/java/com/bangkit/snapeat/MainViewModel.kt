@@ -17,22 +17,22 @@ class MainViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases
 ): ViewModel() {
 
-    var splashCondition by mutableStateOf(true)
-        private set
-
-    var startDestination by mutableStateOf(Route.AppStartNavigation.route)
-        private set
-
-    init{
-        appEntryUseCases.readAppEntry().onEach{shouldStartFromHomeScreen ->
-            if(shouldStartFromHomeScreen){
-
-            }else{
-
-            }
-            delay(300)
-            splashCondition = false
-        }.launchIn(viewModelScope)
-    }
+//    var splashCondition by mutableStateOf(true)
+//        private set
+//
+//    var startDestination by mutableStateOf(Route.AppStartNavigation.route)
+//        private set
+//
+//    init{
+//        appEntryUseCases.readAppEntry().onEach{shouldStartFromHomeScreen ->
+//            if(shouldStartFromHomeScreen){
+//
+//            }else{
+//
+//            }
+//            delay(300)
+//            splashCondition = false
+//        }.launchIn(viewModelScope)
+//    }
 
 }
