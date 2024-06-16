@@ -49,6 +49,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.Dimension
 import com.bangkit.snapeat.presentation.common.CustomButton
@@ -57,6 +59,7 @@ import com.bangkit.snapeat.presentation.common.CustomPasswordField
 import com.bangkit.snapeat.presentation.common.CustomTextField
 import com.bangkit.snapeat.presentation.gapH16
 import com.bangkit.snapeat.presentation.gapH8
+import com.bangkit.snapeat.presentation.navgraph.Route
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
 import com.bangkit.snapeat.presentation.onboarding.components.PageIndicator
 import com.bangkit.snapeat.presentation.onboarding.pages
@@ -71,6 +74,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
+    navController: NavController,
     onBackClick: () -> Unit
 ) {
     Scaffold(
@@ -138,7 +142,7 @@ fun LoginScreen(
                     .padding(horizontal = 16.dp),
                 text = "Login"
             ) {
-
+                navController.navigate(Route.HomeScreen.route)
             }
             gapH16
             Row(
@@ -161,6 +165,6 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPreview(){
     SnapEatTheme {
-        LoginScreen(onBackClick = {})
+        LoginScreen(rememberNavController(), onBackClick = {})
     }
 }

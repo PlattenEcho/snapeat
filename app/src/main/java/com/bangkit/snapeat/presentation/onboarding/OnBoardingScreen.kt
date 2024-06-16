@@ -26,9 +26,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.presentation.Dimension.MediumPadding2
 import com.bangkit.snapeat.presentation.common.CustomButton
 import com.bangkit.snapeat.presentation.gapW8
+import com.bangkit.snapeat.presentation.navgraph.Route
 import com.bangkit.snapeat.presentation.onboarding.components.OnBoardingPage
 import com.bangkit.snapeat.ui.theme.Brown
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
@@ -37,8 +40,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
-//    event: (OnBoardingEvent) -> Unit
+    navController: NavController
 ) {
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +68,7 @@ fun OnBoardingScreen(
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
-                .weight(2f / 3f) // Occupy 2/3 of the screen height
+                .weight(2f / 3f)
                 .fillMaxWidth()
         ) { index ->
             Image(
@@ -79,7 +84,7 @@ fun OnBoardingScreen(
 
         Column(
             modifier = Modifier
-                .weight(1f / 3f) // Occupy 1/3 of the screen height
+                .weight(1f / 3f)
                 .fillMaxWidth()
                 .padding(horizontal = MediumPadding2)
                 .padding(bottom = 16.dp)
@@ -92,7 +97,6 @@ fun OnBoardingScreen(
                 page = pages[pagerState.currentPage],
                 selectedPage = pagerState.currentPage,
             )
-            val scope = rememberCoroutineScope()
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -105,6 +109,7 @@ fun OnBoardingScreen(
                     onClick = {
                         scope.launch {
                             if (pagerState.currentPage == pages.size - 1) {
+                                navController.navigate(Route.AuthScreen.route)
                             } else {
                                 pagerState.animateScrollToPage(
                                     page = pagerState.currentPage + 1
@@ -122,6 +127,6 @@ fun OnBoardingScreen(
 @Composable
 fun OnBoardingPageReview(){
     SnapEatTheme {
-        OnBoardingScreen()
+        OnBoardingScreen(rememberNavController())
     }
 }

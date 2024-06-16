@@ -16,15 +16,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.presentation.Dimension
 import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.navgraph.Route
 import com.bangkit.snapeat.presentation.onboarding.pages
 import com.bangkit.snapeat.ui.theme.Brown
 import com.bangkit.snapeat.ui.theme.DarkBrown
+import com.bangkit.snapeat.ui.theme.GrayBrown
+import com.bangkit.snapeat.ui.theme.GrayOrange
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
 
 @Composable
 fun AuthPage(
+    navController: NavController,
     modifier: Modifier = Modifier
 ){
     Column(modifier = modifier
@@ -44,9 +50,9 @@ fun AuthPage(
             text = "Masuk menggunakan email atau media sosial yang kamu punya",
             modifier = Modifier.padding(horizontal = Dimension.MediumPadding2),
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.White
+            color = GrayBrown
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,6 +63,7 @@ fun AuthPage(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "Masuk") {
+                    navController.navigate(Route.LoginScreen.route)
             }
             Spacer(modifier = Modifier.height(8.dp))
             CustomButton(
@@ -64,7 +71,7 @@ fun AuthPage(
                     .fillMaxWidth(),
                 text = "Daftar",
                 buttonColor = Brown ) {
-
+                    navController.navigate(Route.RegisterScreen.route)
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -75,6 +82,6 @@ fun AuthPage(
 @Composable
 fun OnBoardingPageReview(){
     SnapEatTheme {
-        AuthPage()
+        AuthPage(rememberNavController())
     }
 }

@@ -17,13 +17,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.domain.usecases.AppEntryUseCases
 import com.bangkit.snapeat.presentation.navgraph.NavGraph
+import com.bangkit.snapeat.presentation.navgraph.Route
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val viewModel by viewModels<MainViewModel>()
@@ -35,23 +38,10 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                    OnBoardingScreen()
+                    val navController = rememberNavController()
+                    NavGraph(navController =  navController, startDestination = Route.HomeScreen.route)
                 }
             }
         }
-//        installSplashScreen().apply{
-//            setKeepOnScreenCondition{
-////                viewModel.splashCondition
-//            }
-//        }
-//
-//        setContent {
-//            SnapEatTheme {
-//                Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
-//                    val startDestination = viewModel.startDestination
-//                    NavGraph(startDestination = startDestination)
-//                }
-//            }
-//        }
     }
 }

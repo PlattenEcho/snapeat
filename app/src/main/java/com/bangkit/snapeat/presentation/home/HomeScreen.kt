@@ -51,6 +51,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.gapH16
@@ -67,7 +69,9 @@ import com.bangkit.snapeat.ui.theme.SnapEatTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun  HomeScreen() {
+fun  HomeScreen(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -141,7 +145,8 @@ fun  HomeScreen() {
                 ) {
                     Text(
                         text = item,
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White
                     )
                 }
             }
@@ -182,115 +187,24 @@ fun  HomeScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .layout(){ measurable, constraints ->
-                    val placeable = measurable.measure(constraints.copy(
-                        maxWidth = constraints.maxWidth + 16.dp.roundToPx(), //add the end padding 16.dp
-                    ))
+                .layout() { measurable, constraints ->
+                    val placeable = measurable.measure(
+                        constraints.copy(
+                            maxWidth = constraints.maxWidth + 40.dp.roundToPx(), //add the end padding 16.dp
+                        )
+                    )
                     layout(placeable.width, placeable.height) {
-                        placeable.place(8.dp.roundToPx(), 0)
+                        placeable.place(0, 0)
                     }
                 }
         ) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(end=16.dp),
-                modifier = Modifier.clipToBounds() // Clip content within padding
-            ) {
-                items(listOf(
-                    "Gado Gado Bu Risma",
-                    "Spaghetti Qiu Pasta",
-                    "Gado Gado Bu Risma",
-                    "Spaghetti Qiu Pasta",
-                    "Gado Gado Bu Risma",
-                    "Spaghetti Qiu Pasta")) { place ->
-                    Box(
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(16.dp))
-                            .background(Color.DarkGray)
-                            .size(height = 150.dp, width = 120.dp)
-                    ) {
-                        // Place Image
-                        Image(
-                            painter = painterResource(id = R.drawable.onboarding2),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .clip(RoundedCornerShape(16.dp))
-                                .drawWithCache {
-                                    val gradient = Brush.verticalGradient(
-                                        colors = listOf(Color.Black, Color.Transparent),
-                                        startY = 150.dp.toPx(),
-                                        endY = (150.dp.toPx()) / 3
-                                    )
-                                    onDrawWithContent {
-                                        drawContent()
-                                        drawRect(gradient, blendMode = BlendMode.Multiply)
-                                    }
-                                }
-                        )
-                        Text(
-                            text = place,
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                lineHeight = 16.sp,
-                                fontSize = 12.sp
-                            ),
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                        )
-                    }
-                }
-            }
-        }
-        gapH16
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Hmm, makan sini lagi kali ya?",
-                color = Color.White,
-                style = MaterialTheme.typography.displaySmall.copy(
-                    fontSize = 16.sp,
-                )
-            )
-            Text(
-                text = "Lihat lainnya",
-                color = GrayBrown,
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontSize = 14.sp
-                )
-            )
-        }
-        gapH8
-        Text(
-            text = "Daripada bingung mending samperin tempat favorit kamu",
-            color = Color.White.copy(alpha = 0.75f),
-            style = MaterialTheme.typography.bodySmall.copy(
-                fontSize = 12.sp
-            )
-        )
-
-        gapH16
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .layout(){ measurable, constraints ->
-                    val placeable = measurable.measure(constraints.copy(
-                        maxWidth = constraints.maxWidth + 16.dp.roundToPx(), //add the end padding 16.dp
-                    ))
-                    layout(placeable.width, placeable.height) {
-                        placeable.place(8.dp.roundToPx(), 0)
-                    }
-                }
-        ) {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(end=16.dp),
-                modifier = Modifier.clipToBounds() // Clip content within padding
+                contentPadding = PaddingValues(
+                    start = 20.dp,
+                    end = 20.dp
+                ),
+                modifier = Modifier.clipToBounds()
             ) {
                 items(listOf(
                     "Gado Gado Bu Risma",
@@ -347,6 +261,6 @@ fun  HomeScreen() {
 @Composable
 fun HomeScreenPreview(){
     SnapEatTheme {
-        HomeScreen()
+        HomeScreen(rememberNavController())
     }
 }
