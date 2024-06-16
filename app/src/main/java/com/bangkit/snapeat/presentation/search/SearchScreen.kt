@@ -17,19 +17,12 @@ import com.bangkit.snapeat.ui.theme.Brown
 fun SearchScreen (
     navController: NavController
 ){
-    Scaffold(
-        bottomBar = {
-            BottomBar(navController = navController)
-        }
-    ) {innerPadding ->
-        val bottomPadding = innerPadding.calculateBottomPadding()
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brown)
-                .padding(bottom = bottomPadding, top = 20.dp, start = 20.dp, end = 20.dp)
-        ) {
-            Text(text = "SearchScreen")
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Brown)
+            .padding(20.dp)
+    ) {
+        Text(text = "SearchScreen")
     }
 }

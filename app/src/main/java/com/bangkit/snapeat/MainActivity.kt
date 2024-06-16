@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     val navController = rememberNavController()
-                    val startDestination = Route.OnBoardingScreen.route
+                    val startDestination = Route.HomeScreen.route
                     if(startDestination == Route.HomeScreen.route){
                         MainScreen()
                     } else {
