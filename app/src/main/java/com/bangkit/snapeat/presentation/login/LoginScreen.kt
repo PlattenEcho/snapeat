@@ -142,7 +142,7 @@ fun LoginScreen(
                     .padding(horizontal = 16.dp),
                 text = "Login"
             ) {
-                navController.navigate(Route.HomeScreen.route)
+                navController.navigate(Route.MainScreen.route)
             }
             gapH16
             Row(

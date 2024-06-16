@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.domain.usecases.AppEntryUseCases
+import com.bangkit.snapeat.presentation.main.MainScreen
 import com.bangkit.snapeat.presentation.navgraph.NavGraph
 import com.bangkit.snapeat.presentation.navgraph.Route
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
@@ -39,9 +40,15 @@ class MainActivity : ComponentActivity() {
             ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     val navController = rememberNavController()
-                    NavGraph(navController =  navController, startDestination = Route.HomeScreen.route)
+                    val startDestination = Route.OnBoardingScreen.route
+                    if(startDestination == Route.HomeScreen.route){
+                        MainScreen()
+                    } else {
+                        NavGraph(navController =  navController, startDestination = Route.OnBoardingScreen.route)
+                    }
                 }
             }
         }
     }
 }
+

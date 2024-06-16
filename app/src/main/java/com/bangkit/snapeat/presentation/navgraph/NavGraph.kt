@@ -1,5 +1,7 @@
 package com.bangkit.snapeat.presentation.navgraph
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,10 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.bangkit.snapeat.presentation.auth.AuthScreen
+import com.bangkit.snapeat.presentation.favorite.FavoriteScreen
 import com.bangkit.snapeat.presentation.home.HomeScreen
 import com.bangkit.snapeat.presentation.login.LoginScreen
+import com.bangkit.snapeat.presentation.main.MainScreen
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
+import com.bangkit.snapeat.presentation.profile.ProfileScreen
 import com.bangkit.snapeat.presentation.register.RegisterScreen
+import com.bangkit.snapeat.presentation.search.SearchScreen
 
 @Composable
 fun NavGraph(
@@ -25,7 +31,7 @@ fun NavGraph(
     NavHost(
         modifier = Modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         composable(
             route = Route.OnBoardingScreen.route
@@ -52,6 +58,30 @@ fun NavGraph(
             route = Route.HomeScreen.route
         ){
             HomeScreen(navController)
+        }
+
+        composable(
+            route = Route.SearchScreen.route
+        ){
+            SearchScreen(navController = navController)
+        }
+
+        composable(
+            route = Route.FavoriteScreen.route
+        ){
+            FavoriteScreen(navController = navController)
+        }
+
+        composable(
+            route = Route.ProfileScreen.route
+        ){
+            ProfileScreen(navController = navController)
+        }
+
+        composable(
+            route = Route.MainScreen.route
+        ) {
+            MainScreen()
         }
     }
 }

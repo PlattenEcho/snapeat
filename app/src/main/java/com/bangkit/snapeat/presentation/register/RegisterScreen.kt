@@ -157,7 +157,7 @@ fun RegisterScreen(
                     .padding(horizontal = 16.dp),
                 text = "Register"
             ) {
-                navController.navigate(Route.HomeScreen.route)
+                navController.navigate(Route.MainScreen.route)
             }
         }
     }
