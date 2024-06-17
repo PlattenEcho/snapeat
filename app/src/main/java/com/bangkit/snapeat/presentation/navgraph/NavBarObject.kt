@@ -1,6 +1,7 @@
 package com.bangkit.snapeat.presentation.navgraph
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -22,6 +23,12 @@ sealed class NavBarObject(
         route = "searchScreen",
         title = "Search",
         icon = Icons.Default.Search
+    )
+
+    object Add: NavBarObject(
+        route = "homeScreen",
+        title = "",
+        icon = Icons.Filled.Add
     )
 
     object Favorite: NavBarObject(
