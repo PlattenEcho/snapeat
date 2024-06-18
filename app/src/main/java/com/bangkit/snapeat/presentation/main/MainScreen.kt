@@ -51,22 +51,6 @@ fun MainScreen() {
         bottomBar = {
             BottomBar(navController = navController)
         },
-//        floatingActionButtonPosition = FabPosition.Center,
-//            isFloatingActionButtonDocked = true,
-//            floatingActionButton = {
-//                FloatingActionButton(
-//                    shape = RoundedCornerShape(16.dp),
-//                    onClick = {
-//
-//                    },
-//                    backgroundColor = DarkBrown
-//                ) {
-//                    Icon(
-//                        imageVector = Icons.Filled.Add,
-//                        contentDescription = "Add icon",
-//                        tint = Orange)
-//                }
-//        }
     ) { innerPadding ->
         val bottomPadding = innerPadding.calculateBottomPadding()
         NavGraph(navController = navController, startDestination = Route.HomeScreen.route)
