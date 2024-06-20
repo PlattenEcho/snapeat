@@ -1,13 +1,17 @@
 package com.bangkit.snapeat.presentation.common
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -81,7 +85,88 @@ fun CustomTextField(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AutocompleteTextField(
+    textValue: MutableState<TextFieldValue>,
+    suggestions: List<String>,
+    onSuggestionClicked: (String) -> Unit,
+    placeholderText: String,
+    leadingIcon: ImageVector = Icons.Filled.Person,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val filteredSuggestions = remember(textValue.value.text) {
+        suggestions.filter {
+            it.contains(textValue.value.text, ignoreCase = true) && it.isNotEmpty()
+        }
+    }
 
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            value = textValue.value,
+            onValueChange = {
+                textValue.value = it
+                expanded = true
+            },
+            placeholder = {
+                Text(
+                    text = placeholderText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = GrayOrange
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+            ),
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                color = Color.White
+            ),
+            singleLine = true,
+            leadingIcon = {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = null,
+                    tint = Orange
+                )
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                containerColor = DarkBrown,
+                focusedBorderColor = Orange,
+                unfocusedBorderColor = DarkBrown
+            ),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        DropdownMenu(
+            expanded = expanded && filteredSuggestions.isNotEmpty(),
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(DarkBrown)
+        ) {
+            filteredSuggestions.forEach { suggestion ->
+                DropdownMenuItem(
+                    onClick = {
+                        onSuggestionClicked(suggestion)
+                        textValue.value = TextFieldValue(suggestion)
+                        expanded = false
+                    },
+                    modifier = Modifier.background(DarkBrown)
+                ) {
+                    Text(
+                        text = suggestion,
+                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.White)
+                    )
+                }
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,7 +187,9 @@ fun CustomEmailField(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
         ),
-        textStyle = MaterialTheme.typography.bodyMedium,
+        textStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = Color.White
+        ),
         singleLine = true,
         leadingIcon = {
             Icon(
@@ -120,13 +207,13 @@ fun CustomEmailField(
     )
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomPasswordField(
     passwordValue: MutableState<TextFieldValue>,
 ) {
-    val passwordVisible by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
+
     OutlinedTextField(
         value = passwordValue.value,
         onValueChange = { passwordValue.value = it },
@@ -141,7 +228,9 @@ fun CustomPasswordField(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
         ),
-        textStyle = MaterialTheme.typography.bodyMedium,
+        textStyle = MaterialTheme.typography.bodyMedium.copy(
+            color = Color.White
+        ),
         singleLine = true,
         leadingIcon = {
             Icon(
@@ -155,16 +244,18 @@ fun CustomPasswordField(
             val description = if (passwordVisible) "Hide password" else "Show password"
 
             IconButton(
-                onClick = {}
+                onClick = {
+                    passwordVisible = !passwordVisible
+                }
             ) {
                 Icon(
                     painter = painter,
                     contentDescription = description,
-                    tint = Orange)
+                    tint = Orange
+                )
             }
-
         },
-        visualTransformation = if (!passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             containerColor = DarkBrown,
             focusedBorderColor = Orange,
@@ -172,6 +263,22 @@ fun CustomPasswordField(
         ),
         shape = RoundedCornerShape(8.dp)
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AutocompleteTextFieldPreview() {
+    val textValue = remember { mutableStateOf(TextFieldValue()) }
+    val suggestions = listOf("Suggestion 1", "Suggestion 2", "Suggestion 3", "Another Suggestion")
+
+    SnapEatTheme {
+        AutocompleteTextField(
+            textValue = textValue,
+            suggestions = suggestions,
+            onSuggestionClicked = { },
+            placeholderText = "Search..."
+        )
+    }
 }
 
 @Preview(showBackground = true)

@@ -12,6 +12,7 @@ sealed class Route(
     object FavoriteScreen: Route(route = "favoriteScreen")
     object ProfileScreen: Route(route = "profileScreen")
     object MainScreen: Route(route = "mainScreen")
+    object PostScreen: Route(route = "postScreen")
 
     object AppStartNavigation : Route(route = "appStartNavigation")
     object SnapEatNavigation : Route(route = "snapEatNavigation")

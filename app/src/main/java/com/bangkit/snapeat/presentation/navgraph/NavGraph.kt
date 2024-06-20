@@ -18,6 +18,7 @@ import com.bangkit.snapeat.presentation.home.HomeScreen
 import com.bangkit.snapeat.presentation.login.LoginScreen
 import com.bangkit.snapeat.presentation.main.MainScreen
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
+import com.bangkit.snapeat.presentation.post.PostScreen
 import com.bangkit.snapeat.presentation.profile.ProfileScreen
 import com.bangkit.snapeat.presentation.register.RegisterScreen
 import com.bangkit.snapeat.presentation.search.SearchScreen
@@ -27,11 +28,18 @@ fun NavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = Route.OnBoardingScreen.route,
+
 ) {
     NavHost(
         modifier = Modifier,
         navController = navController,
         startDestination = startDestination,
+        enterTransition = {
+            EnterTransition.None
+        },
+        exitTransition = {
+            ExitTransition.None
+        }
     ) {
         composable(
             route = Route.OnBoardingScreen.route
@@ -82,6 +90,18 @@ fun NavGraph(
             route = Route.MainScreen.route
         ) {
             MainScreen()
+        }
+
+        composable(
+            route = Route.MainScreen.route
+        ) {
+            MainScreen()
+        }
+
+        composable(
+            route = Route.PostScreen.route
+        ) {
+            PostScreen(navController, onBackClick = {navController.popBackStack()})
         }
     }
 }

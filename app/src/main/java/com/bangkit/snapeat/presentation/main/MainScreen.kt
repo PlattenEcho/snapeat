@@ -13,9 +13,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,17 +46,20 @@ import com.bangkit.snapeat.ui.theme.Orange
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         bottomBar = {
-            BottomBar(navController = navController)
+            if (currentRoute != Route.PostScreen.route) {
+                BottomBar(navController = navController)
+            }
         },
     ) { innerPadding ->
         val bottomPadding = innerPadding.calculateBottomPadding()
         NavGraph(navController = navController, startDestination = Route.HomeScreen.route)
     }
 }
-
 
 @Composable
 fun BottomBar(navController: NavController){
@@ -96,7 +99,7 @@ fun BottomBar(navController: NavController){
                 FloatingActionButton(
                     shape = RoundedCornerShape(16.dp),
                     onClick = {
-
+                        navController.navigate(Route.PostScreen.route)
                     },
                     backgroundColor = Brown
                 ) {
@@ -109,6 +112,7 @@ fun BottomBar(navController: NavController){
         }
     }
 }
+
 @Composable
 fun RowScope.AddItem(
     screen: NavBarObject,

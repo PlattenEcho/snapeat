@@ -1,5 +1,7 @@
 package com.bangkit.snapeat.presentation.profile
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -51,9 +54,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
+import com.bangkit.snapeat.presentation.common.FeedsCard
 import com.bangkit.snapeat.presentation.gapH
 import com.bangkit.snapeat.presentation.gapH12
 import com.bangkit.snapeat.presentation.gapH16
+import com.bangkit.snapeat.presentation.gapH32
 import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.presentation.home.BottomBar
 import com.bangkit.snapeat.presentation.register.RegisterScreen
@@ -77,60 +82,84 @@ fun ProfileScreen (
         state = state,
         scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
         toolbar = {
+            val textSize = (24 + (28 - 24) * state.toolbarState.progress).sp
+            val textSizeSmall = (16 + (18 - 16) * state.toolbarState.progress).sp
+
+            val imageAlpha = animateFloatAsState(targetValue = state.toolbarState.progress,
+                label = ""
+            )
+            val imageSize by animateDpAsState(targetValue = 96.dp * state.toolbarState.progress)
+            val backgroundColor = if (state.toolbarState.progress < 0.5f) Brown else Color.Transparent
+
             Box(
                 modifier = Modifier
-                    .background(Color.DarkGray)
-            ){
-                Image(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(320.dp)
-                        .drawWithCache {
-                            val gradient = Brush.verticalGradient(
-                                colors = listOf(Brown, Color.Transparent),
-                                startY = 320.dp.toPx(),
-                                endY = (320.dp.toPx()) / 3
-                            )
-                            onDrawWithContent {
-                                drawContent()
-                                drawRect(gradient)
-                            }
-                        },
-                    contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.profile_bg),
-                    contentDescription =null
-                )
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                ) {
+                    .fillMaxWidth()
+                    .height(320.dp)
+                    .background(backgroundColor)
+                    .pin()
+            ) {
+                if (state.toolbarState.progress >= 0.5f) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(320.dp)
+                            .drawWithCache {
+                                val gradient = Brush.verticalGradient(
+                                    colors = listOf(Brown, Color.Transparent),
+                                    startY = 320.dp.toPx(),
+                                    endY = (320.dp.toPx()) / 3
+                                )
+                                onDrawWithContent {
+                                    drawContent()
+                                    drawRect(gradient)
+                                }
+                            },
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = R.drawable.profile_bg),
+                        contentDescription = null
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .road(
+                        Alignment.CenterStart,
+                        if (state.toolbarState.progress < 0.5f) Alignment.TopStart else Alignment.BottomCenter
+                    )
+                    .padding(
+                        if (state.toolbarState.progress < 0.5f) 20.dp else 0.dp
+                    ),
+                horizontalAlignment = if (state.toolbarState.progress < 0.5f) Alignment.Start else Alignment.CenterHorizontally
+            ) {
+                if (state.toolbarState.progress >= 0.5f) {
                     Image(
                         painter = painterResource(id = R.drawable.bhaska),
                         contentDescription = "Profile Picture",
                         modifier = Modifier
-                            .size(96.dp)
+                            .size(imageSize)
                             .clip(CircleShape)
+                            .alpha(imageAlpha.value)
                             .border(2.dp, Color.White, CircleShape)
-
                     )
                     gapH8
-                    Text(
-                        text = "Muhammad Bhaska",
-                        color = Color.White,
-                        style = MaterialTheme.typography.displaySmall.copy(
-                        )
-                    )
-                    Text(
-                        text = "@bhsk",
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                        )
-                    )
                 }
+
+                Text(
+                    text = "Muhammad Bhaska",
+                    color = Color.White,
+                    style = MaterialTheme.typography.displaySmall,
+                    fontSize = textSize
+                )
+                Text(
+                    text = "@bhsk",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = textSizeSmall
+                )
             }
         }
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -281,26 +310,12 @@ fun ProfileScreen (
                     }
                 }
             }
-            Text(
-                text = "Item ",
-                modifier = Modifier.padding(32.dp)
-            )
-            Text(
-                text = "Item ",
-                modifier = Modifier.padding(32.dp)
-            )
-            Text(
-                text = "Item ",
-                modifier = Modifier.padding(32.dp)
-            )
-            Text(
-                text = "Item ",
-                modifier = Modifier.padding(32.dp)
-            )
-            Text(
-                text = "Item ",
-                modifier = Modifier.padding(32.dp)
-            )
+            gapH32
+            FeedsCard()
+            gapH16
+            FeedsCard()
+            gapH16
+            FeedsCard()
 
         }
     }

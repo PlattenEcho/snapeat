@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
@@ -54,7 +56,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
+import com.bangkit.snapeat.presentation.common.FeedsCard
 import com.bangkit.snapeat.presentation.gapH16
+import com.bangkit.snapeat.presentation.gapH32
 import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.presentation.gapW
 import com.bangkit.snapeat.presentation.gapW4
@@ -75,6 +79,7 @@ fun  HomeScreen(
                 .fillMaxSize()
                 .background(Brown)
                 .padding(20.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             // Profile and Location
             Row(
@@ -125,56 +130,28 @@ fun  HomeScreen(
 
             gapH16
             Text(
-                text = "Halo, Bhaska! Makan apa nih pagi ini?",
+                text = "Halo, Bhaska! Makan apa nih hari ini?",
                 color = Color.White,
                 style = MaterialTheme.typography.displayMedium
             )
 
             gapH16
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-            ) {
-                listOf("Bubur Ayam", "Soto Lamongan", "Nasi Uduk", "Jus", "Roti", "Susu").forEach { item ->
-                    Button(
-                        onClick = { /* TODO */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Brown2)
-                    ) {
-                        Text(
-                            text = item,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.White
-                        )
-                    }
-                }
-            }
-
-            gapH16
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Hmm, makan sini lagi kali ya?",
+                    text = "Hmm, coba sini  kali ya?",
                     color = Color.White,
                     style = MaterialTheme.typography.displaySmall.copy(
                         fontSize = 16.sp,
                     )
                 )
-                Text(
-                    text = "Lihat lainnya",
-                    color = GrayBrown,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 14.sp
-                    )
-                )
             }
             gapH8
             Text(
-                text = "Daripada bingung mending samperin tempat favorit kamu",
+                text = "Daripada bingung mending samperin tempat teman kamu",
                 color = Color.White.copy(alpha = 0.75f),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 12.sp
@@ -219,7 +196,7 @@ fun  HomeScreen(
                         ) {
                             // Place Image
                             Image(
-                                painter = painterResource(id = R.drawable.onboarding2),
+                                painter = painterResource(id = R.drawable.fikim),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
@@ -252,6 +229,22 @@ fun  HomeScreen(
                     }
                 }
             }
+
+            gapH32
+            Text(
+                text = "Feeds",
+                color = Color.White,
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontSize = 16.sp,
+                )
+            )
+            gapH16
+            FeedsCard()
+            gapH16
+            FeedsCard()
+            gapH16
+            FeedsCard()
+
         }
     }
 
