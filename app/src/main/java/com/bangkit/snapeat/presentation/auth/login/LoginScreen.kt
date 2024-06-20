@@ -1,6 +1,7 @@
 package com.bangkit.snapeat.presentation.auth.login
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -162,6 +163,7 @@ fun LoginScreen(
                 text = "Login"
             ) {
                 coroutineScope.launch {
+                    Log.d("Login", "Email: ${emailValue.value.text}, Password: ${passwordValue.value.text}")
                     viewModel.loginUser(emailValue.value.text, passwordValue.value.text)
                 }
             }

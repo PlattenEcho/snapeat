@@ -1,5 +1,6 @@
 package com.bangkit.snapeat.presentation.auth
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -47,9 +48,12 @@ class AuthViewModel @Inject constructor(
     }
 
     fun loginUser(email: String, password: String) {
+        Log.d("LoginResponse", "euy")
         viewModelScope.launch {
             try {
+                Log.d("Masuk", "Hehe")
                 val response = userRepository.loginUser(email, password)
+                Log.d("LoginResponse", response.toString())
                 if (response.isSuccessful) {
                     loginState = LoginState.Success(response.body()!!)
                     snackbarMessage = "Login successful!"

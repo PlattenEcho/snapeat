@@ -114,4 +114,7 @@ dependencies {
 
     implementation ("me.onebone:toolbar-compose:2.3.5")
 
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+
 }
