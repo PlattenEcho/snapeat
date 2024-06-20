@@ -1,12 +1,13 @@
 package com.bangkit.snapeat.di
 
-import android.app.Application
-import com.bangkit.snapeat.data.manager.LocalUserManagerImplementation
-import com.bangkit.snapeat.domain.manager.LocalUserManager
+import com.bangkit.snapeat.data.api.ApiService
+import com.bangkit.snapeat.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -14,7 +15,17 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideLocalUserManager(
-        application: Application
-    ): LocalUserManager = LocalUserManagerImplementation(application)
+    fun provideApiService(): ApiService {
+        return Retrofit.Builder()
+            .baseUrl("http://localhost:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(apiService: ApiService): UserRepository {
+        return UserRepository(apiService)
+    }
 }

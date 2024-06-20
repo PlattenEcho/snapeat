@@ -15,12 +15,12 @@ import androidx.navigation.navigation
 import com.bangkit.snapeat.presentation.auth.AuthScreen
 import com.bangkit.snapeat.presentation.favorite.FavoriteScreen
 import com.bangkit.snapeat.presentation.home.HomeScreen
-import com.bangkit.snapeat.presentation.login.LoginScreen
+import com.bangkit.snapeat.presentation.auth.login.LoginScreen
 import com.bangkit.snapeat.presentation.main.MainScreen
 import com.bangkit.snapeat.presentation.onboarding.OnBoardingScreen
 import com.bangkit.snapeat.presentation.post.PostScreen
 import com.bangkit.snapeat.presentation.profile.ProfileScreen
-import com.bangkit.snapeat.presentation.register.RegisterScreen
+import com.bangkit.snapeat.presentation.auth.register.RegisterScreen
 import com.bangkit.snapeat.presentation.search.SearchScreen
 
 @Composable

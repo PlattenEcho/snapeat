@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkit.snapeat.R
-import com.bangkit.snapeat.presentation.register.RegisterScreen
+import com.bangkit.snapeat.presentation.auth.register.RegisterScreen
 import com.bangkit.snapeat.ui.theme.DarkBrown
 import com.bangkit.snapeat.ui.theme.GrayOrange
 import com.bangkit.snapeat.ui.theme.Orange

@@ -1,4 +1,4 @@
-package com.bangkit.snapeat.presentation.register
+package com.bangkit.snapeat.presentation.auth.register
 
 
 import android.content.res.Configuration
@@ -35,9 +35,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,10 +56,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
+import com.bangkit.snapeat.data.repository.UserRepository
 import com.bangkit.snapeat.presentation.Dimension
+import com.bangkit.snapeat.presentation.auth.AuthViewModel
 import com.bangkit.snapeat.presentation.common.CustomButton
 import com.bangkit.snapeat.presentation.common.CustomEmailField
 import com.bangkit.snapeat.presentation.common.CustomPasswordField
@@ -76,14 +81,22 @@ import com.bangkit.snapeat.ui.theme.GrayBrown
 import com.bangkit.snapeat.ui.theme.GrayOrange
 import com.bangkit.snapeat.ui.theme.Orange
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
+import com.bangkit.snapeat.util.CustomSnackbarHost
+import com.bangkit.snapeat.util.rememberSnackbarHostState
+import com.bangkit.snapeat.util.showSnackbar
 import com.google.android.material.bottomappbar.BottomAppBar
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = rememberSnackbarHostState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -111,6 +124,9 @@ fun RegisterScreen(
                 }
             )
         },
+        snackbarHost = {
+            CustomSnackbarHost(snackbarHostState)
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -121,8 +137,6 @@ fun RegisterScreen(
             val usernameValue = remember { mutableStateOf(TextFieldValue()) }
             val emailValue = remember { mutableStateOf(TextFieldValue()) }
             val passwordValue = remember { mutableStateOf(TextFieldValue()) }
-            var passwordVisible by remember { mutableStateOf(false) }
-
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -143,13 +157,16 @@ fun RegisterScreen(
             gapH16
             CustomTextField(
                 textValue = usernameValue,
-                text = "Masukkan Username")
+                text = "Masukkan Username"
+            )
             gapH16
             CustomEmailField(
-                emailValue = emailValue)
+                emailValue = emailValue
+            )
             gapH16
             CustomPasswordField(
-                passwordValue = passwordValue)
+                passwordValue = passwordValue
+            )
             gapH16
             CustomButton(
                 modifier = Modifier
@@ -157,13 +174,29 @@ fun RegisterScreen(
                     .padding(horizontal = 16.dp),
                 text = "Register"
             ) {
-                navController.navigate(Route.MainScreen.route)
+                coroutineScope.launch {
+                    coroutineScope.launch {
+                        viewModel.registerUser(
+                            emailValue.value.text,
+                            passwordValue.value.text,
+                            usernameValue.value.text
+                        )
+                    }
+                }
+            }
+            LaunchedEffect(viewModel.snackbarMessage) {
+                if (viewModel.snackbarMessage.isNotEmpty()) {
+                    showSnackbar(
+                        coroutineScope = coroutineScope,
+                        snackbarHostState = snackbarHostState,
+                        message = viewModel.snackbarMessage,
+                        isError = viewModel.isErrorSnackbar
+                    )
+                }
             }
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

@@ -1,4 +1,4 @@
-package com.bangkit.snapeat.presentation.login
+package com.bangkit.snapeat.presentation.auth.login
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -30,11 +30,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,10 +52,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.Dimension
+import com.bangkit.snapeat.presentation.auth.AuthViewModel
 import com.bangkit.snapeat.presentation.common.CustomButton
 import com.bangkit.snapeat.presentation.common.CustomEmailField
 import com.bangkit.snapeat.presentation.common.CustomPasswordField
@@ -69,18 +74,26 @@ import com.bangkit.snapeat.ui.theme.GrayBrown
 import com.bangkit.snapeat.ui.theme.GrayOrange
 import com.bangkit.snapeat.ui.theme.Orange
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
+import com.bangkit.snapeat.util.CustomSnackbarHost
+import com.bangkit.snapeat.util.rememberSnackbarHostState
+import com.bangkit.snapeat.util.showSnackbar
 import com.google.android.material.bottomappbar.BottomAppBar
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavController,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = rememberSnackbarHostState()
+
     Scaffold(
         topBar = {
             TopAppBar(
-                colors = topAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Brown,
                     titleContentColor = Color.White,
                 ),
@@ -104,6 +117,9 @@ fun LoginScreen(
                 }
             )
         },
+        snackbarHost = {
+            CustomSnackbarHost(snackbarHostState)
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -113,6 +129,7 @@ fun LoginScreen(
         ) {
             val emailValue = remember { mutableStateOf(TextFieldValue()) }
             val passwordValue = remember { mutableStateOf(TextFieldValue()) }
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Masuk menggunakan Email",
@@ -131,10 +148,12 @@ fun LoginScreen(
             )
             gapH16
             CustomEmailField(
-                emailValue = emailValue)
+                emailValue = emailValue
+            )
             gapH16
             CustomPasswordField(
-                passwordValue = passwordValue)
+                passwordValue = passwordValue
+            )
             gapH16
             CustomButton(
                 modifier = Modifier
@@ -142,7 +161,9 @@ fun LoginScreen(
                     .padding(horizontal = 16.dp),
                 text = "Login"
             ) {
-                navController.navigate(Route.MainScreen.route)
+                coroutineScope.launch {
+                    viewModel.loginUser(emailValue.value.text, passwordValue.value.text)
+                }
             }
             gapH16
             Row(
@@ -154,8 +175,31 @@ fun LoginScreen(
                 Text(
                     text = "Lupa Password?",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Orange
+                    color = Color.White
                 )
+            }
+
+            LaunchedEffect(viewModel.snackbarMessage) {
+                if (viewModel.snackbarMessage.isNotEmpty()) {
+                    showSnackbar(
+                        coroutineScope = coroutineScope,
+                        snackbarHostState = snackbarHostState,
+                        message = viewModel.snackbarMessage,
+                        isError = viewModel.isErrorSnackbar
+                    )
+                }
+            }
+
+            when (val state = viewModel.loginState) {
+                is AuthViewModel.LoginState.Success -> {
+                    navController.navigate(Route.MainScreen.route)
+                }
+                is AuthViewModel.LoginState.Error -> {
+                    Text("Error: ${state.message}", color = Color.Red)
+                    viewModel.snackbarMessage = "Error: ${state.message}"
+                    viewModel.isErrorSnackbar = false
+                }
+                else -> {}
             }
         }
     }

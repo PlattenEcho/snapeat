@@ -61,7 +61,7 @@ import com.bangkit.snapeat.presentation.gapH16
 import com.bangkit.snapeat.presentation.gapH32
 import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.presentation.home.BottomBar
-import com.bangkit.snapeat.presentation.register.RegisterScreen
+import com.bangkit.snapeat.presentation.auth.register.RegisterScreen
 import com.bangkit.snapeat.ui.theme.Brown
 import com.bangkit.snapeat.ui.theme.GrayBrown
 import com.bangkit.snapeat.ui.theme.SnapEatTheme
