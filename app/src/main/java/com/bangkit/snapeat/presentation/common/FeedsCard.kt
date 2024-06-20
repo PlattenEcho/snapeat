@@ -91,7 +91,7 @@ fun FeedsCard() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.fikim), // Replace with your profile picture resource
+                    painter = painterResource(id = R.drawable.bhaska), // Replace with your profile picture resource
                     contentDescription = "Profile Picture",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -102,7 +102,7 @@ fun FeedsCard() {
                 gapW8
                 Column {
                     Text(
-                        text = "Fikim",
+                        text = "Bhaska",
                         color = Color.White,
                         style = MaterialTheme.typography.displaySmall.copy(
                             fontSize = 16.sp

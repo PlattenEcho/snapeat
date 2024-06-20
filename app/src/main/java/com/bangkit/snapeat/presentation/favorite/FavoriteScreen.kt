@@ -84,17 +84,44 @@ fun FavoriteScreen(
                 }
             }
             Text(
-                text = "@bbbb's Favourite",
+                text = "@bhsk's Favourite",
                 color = Color.White,
                 style = MaterialTheme.typography.displaySmall.copy(
                     fontSize = 24.sp
                 )
             )
             gapH16
-            repeat(12) {
-                PlaylistList(onClick = {})
-                gapH16
-            }
+            PlaylistList(
+                name = "Mexico Shack",
+                rating = "4.5",
+                ratingCount = "(1500)",
+                img = painterResource(id = R.drawable.onboarding1),
+                onClick = {}
+            )
+            gapH16
+            PlaylistList(
+                name = "Burger Blangur",
+                rating = "4.5",
+                ratingCount = "(1500)",
+                img = painterResource(id = R.drawable.onboarding2),
+                onClick = {}
+            )
+            gapH16
+            PlaylistList(
+                name = "Tacos Lamongan",
+                rating = "4.5",
+                ratingCount = "(1500)",
+                img = painterResource(id = R.drawable.onboarding3),
+                onClick = {}
+            )
+            gapH16
+            PlaylistList(
+                name = "Mexico Shack",
+                rating = "4.5",
+                ratingCount = "(1500)",
+                img = painterResource(id = R.drawable.onboarding1),
+                onClick = {}
+            )
         }
     }
 }

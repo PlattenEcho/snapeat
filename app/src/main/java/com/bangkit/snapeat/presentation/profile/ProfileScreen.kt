@@ -265,7 +265,7 @@ fun ProfileScreen (
                     items(listOf(
                         "Gado Gado Bu Risma",
                         "Spaghetti Qiu Pasta",
-                        "Gado Gado Bu Risma",
+                        "Tacos Akbar",
                         "Spaghetti Qiu Pasta",
                         "Gado Gado Bu Risma",
                         "Spaghetti Qiu Pasta")) { place ->

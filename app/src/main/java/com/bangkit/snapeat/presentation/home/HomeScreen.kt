@@ -184,7 +184,7 @@ fun  HomeScreen(
                     items(listOf(
                         "Gado Gado Bu Risma",
                         "Spaghetti Qiu Pasta",
-                        "Gado Gado Bu Risma",
+                        "Tacos Akbar",
                         "Spaghetti Qiu Pasta",
                         "Gado Gado Bu Risma",
                         "Spaghetti Qiu Pasta")) { place ->
@@ -194,9 +194,17 @@ fun  HomeScreen(
                                 .background(Color.DarkGray)
                                 .size(height = 150.dp, width = 120.dp)
                         ) {
+                            // Determine the image resource based on the item index
+                            val imageResource = when (place) {
+                                "Gado Gado Bu Risma" -> R.drawable.onboarding1
+                                "Spaghetti Qiu Pasta" -> R.drawable.onboarding2
+                                "Tacos Akbar" -> R.drawable.onboarding3
+                                else -> R.drawable.onboarding1 // Default image
+                            }
+
                             // Place Image
                             Image(
-                                painter = painterResource(id = R.drawable.fikim),
+                                painter = painterResource(id = imageResource),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
