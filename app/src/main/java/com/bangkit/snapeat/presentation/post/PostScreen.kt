@@ -18,8 +18,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -53,7 +55,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bangkit.snapeat.R
 import com.bangkit.snapeat.presentation.common.AutocompleteTextField
+import com.bangkit.snapeat.presentation.common.CustomButton
+import com.bangkit.snapeat.presentation.common.CustomTextField
 import com.bangkit.snapeat.presentation.gapH16
+import com.bangkit.snapeat.presentation.gapH8
 import com.bangkit.snapeat.ui.theme.Brown
 import com.bangkit.snapeat.ui.theme.GrayBrown
 import com.bangkit.snapeat.ui.theme.Orange
@@ -119,59 +124,45 @@ fun PostScreen(
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            gapH16
             val restaurantValue = remember { mutableStateOf(TextFieldValue()) }
             val suggestions = listOf("Suggestion 1", "Suggestion 2", "Suggestion 3", "Another Suggestion")
-            AutocompleteTextField(
-                textValue = restaurantValue,
-                suggestions = suggestions,
-                onSuggestionClicked = { },
-                placeholderText = "Pilih Restaurant",
-                leadingIcon = Icons.Filled.Home
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = food,
-                onValueChange = { food = it },
-                label = { Text("Food") },
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White,
-                    cursorColor = Color.Black
+                    .padding(16.dp)
+            ){
+                RatingBar(rating = rating) { newRating ->
+                    rating = newRating
+                }
+                gapH16
+                AutocompleteTextField(
+                    textValue = restaurantValue,
+                    suggestions = suggestions,
+                    onSuggestionClicked = { },
+                    placeholderText = "Pilih Restaurant",
+                    leadingIcon = Icons.Filled.Home
                 )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            RatingBar(rating = rating) { newRating ->
-                rating = newRating
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = caption,
-                onValueChange = { caption = it },
-                label = { Text("Caption") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.White,
-                    cursorColor = Color.Black
-                )
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(containerColor = Orange),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(
+                gapH16
+                CustomTextField(
+                    textValue = remember { mutableStateOf(TextFieldValue()) },
+                    text = "Makanan yang dimakan",
+                    leadingIconPainter = painterResource(id = R.drawable.baseline_fastfood_24))
+                gapH16
+                CustomTextField(
+                    textValue = remember { mutableStateOf(TextFieldValue()) },
+                    text = "Reviews",
+                    leadingIcon = Icons.Filled.Create)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Spacer(modifier = Modifier.height(16.dp))
+                CustomButton(
                     text = "Tambahkan Postingan",
-                    color = Color.White
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
             }
+
         }
     }
 }
@@ -185,7 +176,7 @@ fun RatingBar(rating: Int, onRatingChanged: (Int) -> Unit) {
         horizontalArrangement = Arrangement.Center
     ) {
         for (i in 1..5) {
-            val color = if (i <= rating) Color.Yellow else Color.Gray
+            val color = if (i <= rating) Color.White else GrayBrown
             IconButton(onClick = { onRatingChanged(i) }) {
                 Icon(
                     imageVector = Icons.Default.Star,

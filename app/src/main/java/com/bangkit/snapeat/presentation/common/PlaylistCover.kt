@@ -73,7 +73,7 @@ fun PlaylistCover() {
                 ),
             )
             Text(
-                text = "@bbbb",
+                text = "@bhsk",
                 color = Color.White,
                 style = MaterialTheme.typography.displaySmall.copy(
                     fontSize = 16.sp

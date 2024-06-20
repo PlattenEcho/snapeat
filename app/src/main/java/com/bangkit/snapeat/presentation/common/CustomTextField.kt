@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -50,6 +51,7 @@ fun CustomTextField(
     textValue: MutableState<TextFieldValue>,
     text: String,
     leadingIcon: ImageVector = Icons.Filled.Person,
+    leadingIconPainter: Painter? = null, // Accept Painter for leading icon
 ) {
     OutlinedTextField(
         value = textValue.value,
@@ -60,7 +62,6 @@ fun CustomTextField(
             color = GrayOrange
         ) },
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
             keyboardType =  KeyboardType.Text,
@@ -70,11 +71,20 @@ fun CustomTextField(
         ),
         singleLine = true,
         leadingIcon = {
-            Icon(
-                imageVector = leadingIcon,
-                contentDescription = null,
-                tint = Orange
-            )
+            if (leadingIconPainter != null) {
+                Icon(
+                    painter = leadingIconPainter,
+                    contentDescription = null,
+                    tint = Orange
+                )
+            } else  {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = null,
+                    tint = Orange
+                )
+            }
+
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             containerColor = DarkBrown,
@@ -182,7 +192,6 @@ fun CustomEmailField(
             color = GrayOrange
         ) },
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -223,7 +232,6 @@ fun CustomPasswordField(
             color = GrayOrange
         ) },
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
