@@ -11,7 +11,7 @@ data class Page(
 
 val pages = listOf(
     Page(
-        title = "Selamat Datang di          SnapEat🍽️",
+        title = "Selamat Datang di SnapEat 🍽️",
         description = "Mulai eksplorasi makanan kamu dengan SnapEat",
         image = R.drawable.onboarding1
     ),

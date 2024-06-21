@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bangkit.snapeat.domain.manager.LocalUserManager
 import com.bangkit.snapeat.util.Constants
@@ -17,19 +18,34 @@ class LocalUserManagerImplementation(
 ): LocalUserManager {
     override suspend fun saveAppEntry() {
         context.dataStore.edit{ settings ->
-            settings[PrefrencesKeys.APP_ENTRY] = true
+            settings[PreferencesKeys.APP_ENTRY] = true
         }
     }
 
     override fun readAppEntry(): Flow<Boolean> {
         return context.dataStore.data.map{preferences ->
-            preferences[PrefrencesKeys.APP_ENTRY]?:false
+            preferences[PreferencesKeys.APP_ENTRY]?:false
         }
     }
+
+    override suspend fun saveToken(token: String) {
+        context.dataStore.edit{ settings ->
+            settings[PreferencesKeys.USER_TOKEN] = token
+        }
+    }
+
+    override fun readToken(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.USER_TOKEN]
+        }
+    }
+
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_SETTINGS)
 
-private object PrefrencesKeys{
+private object PreferencesKeys{
     val APP_ENTRY = booleanPreferencesKey(name = Constants.APP_ENTRY)
+    val USER_TOKEN = stringPreferencesKey(name = Constants.TOKEN)
+
 }
