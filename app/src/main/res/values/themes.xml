@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Snapeat" parent="Base.Theme.Snapeat" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#45301f</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_snapeat</item>
+        <item name="postSplashScreenTheme">@style/Theme.Snapeat</item>
+    </style>
 </resources>
