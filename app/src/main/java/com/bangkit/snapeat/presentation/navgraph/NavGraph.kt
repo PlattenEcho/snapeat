@@ -77,7 +77,7 @@ fun NavGraph(
         composable(
             route = Route.FavoriteScreen.route
         ){
-            FavoriteScreen(navController = navController)
+            FavoriteScreen(navController = navController, viewModel = hiltViewModel())
         }
 
         composable(

@@ -8,13 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit.snapeat.data.repository.UserRepository
 import com.bangkit.snapeat.data.response.LoginResponse
+import com.bangkit.snapeat.domain.manager.LocalUserManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val localUserManager: LocalUserManager
 ) : ViewModel() {
 
     var loginState by mutableStateOf<LoginState?>(null)
@@ -53,9 +55,19 @@ class AuthViewModel @Inject constructor(
             try {
                 Log.d("Masuk", "Hehe")
                 val response = userRepository.loginUser(email, password)
-                Log.d("LoginResponse", response.toString())
-                if (response.isSuccessful) {
+                Log.d("LoginResponse", response.body().toString())
+
+                if(response.isSuccessful) {
                     loginState = LoginState.Success(response.body()!!)
+                    localUserManager.saveToken(response.body()!!.user.stsTokenManager.accessToken)
+                    response.body()!!.user.providerData.first().let {
+                        localUserManager.saveUserInformation(
+                            response.body()!!.user.email,
+                            response.body()!!.user.uid,
+                            it.displayName ?: "No name",
+                            it.photoURL ?: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+                        )
+                    }
                     snackbarMessage = "Login successful!"
                     isErrorSnackbar = false
                 } else {

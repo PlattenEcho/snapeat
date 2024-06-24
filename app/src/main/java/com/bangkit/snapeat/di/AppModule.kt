@@ -1,7 +1,9 @@
 package com.bangkit.snapeat.di
 
 import com.bangkit.snapeat.data.api.ApiService
+import com.bangkit.snapeat.data.repository.FavoriteRepository
 import com.bangkit.snapeat.data.repository.UserRepository
+import com.bangkit.snapeat.domain.manager.LocalUserManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +29,11 @@ object AppModule {
     @Singleton
     fun provideUserRepository(apiService: ApiService): UserRepository {
         return UserRepository(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(apiService: ApiService): FavoriteRepository {
+        return FavoriteRepository(apiService)
     }
 }

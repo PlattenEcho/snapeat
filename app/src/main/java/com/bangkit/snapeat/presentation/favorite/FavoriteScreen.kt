@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,15 +48,19 @@ import com.bangkit.snapeat.ui.theme.DarkBrown
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
-
-
+import java.util.concurrent.Flow
 
 
 @Composable
 fun FavoriteScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: FavoriteViewModel,
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getFavorites(userId = "userId") // replace with actual userId
+    }
 
     Scaffold(
         modifier = Modifier

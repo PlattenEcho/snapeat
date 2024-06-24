@@ -4,7 +4,7 @@ import com.bangkit.snapeat.data.request.PostRequest
 import com.bangkit.snapeat.data.response.BookmarkResponse
 import com.bangkit.snapeat.data.response.FriendResponse
 import com.bangkit.snapeat.data.response.LikeResponse
-import com.bangkit.snapeat.data.response.LoginRequest
+import com.bangkit.snapeat.data.request.LoginRequest
 import com.bangkit.snapeat.data.response.LoginResponse
 import com.bangkit.snapeat.data.response.PostResponse
 import com.bangkit.snapeat.data.response.ProfileResponse
@@ -41,6 +41,4 @@ interface ApiService {
 
     @GET("users/{id}/favorites")
     suspend fun getFavorites(@Path("id") id: String): Response<List<BookmarkResponse>>
-
-
 }
